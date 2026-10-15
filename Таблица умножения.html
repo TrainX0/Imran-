@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2b2d7e">
+<title>Таблица умножения</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#eef0ff;--card:#fff;--tx:#1d1f4d;--mu:#6a6d9e;--pr:#3b3fd6;--pr2:#2b2d7e;--sun:#ffc531;--ok:#1fae6b;--bad:#e5435a;--ln:#d9dcf7;--sh:0 4px 0 #cfd3f5}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12133a;--card:#1d1f55;--tx:#f0f1ff;--mu:#9fa3dd;--pr:#7c80ff;--pr2:#0d0e2b;--ln:#33368a;--sh:0 4px 0 #0c0d2a}}
+:root[data-theme="dark"]{--bg:#12133a;--card:#1d1f55;--tx:#f0f1ff;--mu:#9fa3dd;--pr:#7c80ff;--pr2:#0d0e2b;--ln:#33368a;--sh:0 4px 0 #0c0d2a}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--tx);font:500 17px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+#app{max-width:480px;margin:0 auto;padding:16px 16px 40px}
+h1,h2,h3{margin:0;line-height:1.15}
+button{font:inherit;color:inherit;border:0;cursor:pointer}
+.btn{display:block;width:100%;padding:15px;border-radius:16px;background:var(--pr);color:#fff;font-weight:800;font-size:18px;box-shadow:0 4px 0 var(--pr2);margin-top:14px}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--pr2)}
+.btn.sun{background:var(--sun);color:#2a2200;box-shadow:0 4px 0 #c79300}
+.btn.ghost{background:var(--card);color:var(--tx);box-shadow:var(--sh)}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.back{background:var(--card);width:42px;height:42px;border-radius:12px;font-size:20px;box-shadow:var(--sh)}
+.bar{flex:1;height:14px;background:var(--ln);border-radius:9px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--sun);border-radius:9px;transition:width .3s}
+.hero{background:var(--pr2);color:#fff;border-radius:24px;padding:20px;margin-bottom:22px}
+.hero h1{font-size:28px}
+.hero p{margin:6px 0 14px;opacity:.85}
+.chips{display:flex;gap:8px;margin-top:12px}
+.chip{background:rgba(255,255,255,.14);border-radius:12px;padding:6px 12px;font-weight:700;font-size:15px}
+.trail{position:relative;display:flex;flex-direction:column;gap:14px;padding:4px 0}
+.node{display:flex;align-items:center;gap:14px;width:86%;background:var(--card);border-radius:20px;padding:12px 14px;box-shadow:var(--sh);text-align:left}
+.node:nth-child(even){margin-left:auto}
+.node .n{flex:none;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:21px;color:#fff;background:var(--c)}
+.node b{display:block;font-size:18px}
+.node small{color:var(--mu);font-size:15px}
+.node.lock{opacity:.5}
+.node.lock .n{background:var(--mu)}
+.node.trophy{width:100%;background:var(--sun);color:#2a2200}
+.node.trophy small{color:#5b4700}
+.node.trophy .n{background:#2a2200;color:var(--sun)}
+.st{letter-spacing:2px;font-size:17px}
+.card{background:var(--card);border-radius:20px;padding:16px;box-shadow:var(--sh);margin-bottom:14px}
+.trick{background:var(--sun);color:#2a2200;border-radius:20px;padding:14px 16px;font-weight:700;margin-bottom:14px}
+.rows{display:grid;gap:6px}
+.row{display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-radius:12px;background:var(--bg);font-weight:800;font-size:20px;width:100%;text-align:left}
+.row.on{outline:3px solid var(--pr)}
+.row span:last-child{color:var(--pr)}
+.row.hid span:last-child{opacity:0}
+.dots{display:flex;flex-wrap:wrap;gap:5px;margin:12px auto 4px;justify-content:center}
+.dots i{width:20px;height:20px;border-radius:50%;background:var(--c)}
+.q{font-size:54px;font-weight:900;text-align:center;margin:18px 0}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.opt{padding:18px;border-radius:16px;background:var(--card);box-shadow:var(--sh);font-size:26px;font-weight:800}
+.opt.ok,.disp.ok{background:var(--ok);color:#fff}
+.opt.bad,.disp.bad{background:var(--bad);color:#fff}
+.disp{height:76px;border-radius:18px;background:var(--card);box-shadow:var(--sh);display:grid;place-items:center;font-size:40px;font-weight:900;margin-bottom:12px}
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pad button{padding:15px 0;border-radius:14px;background:var(--card);box-shadow:var(--sh);font-size:26px;font-weight:800}
+.pad button:active{transform:translateY(3px)}
+.pad .go{background:var(--ok);color:#fff}
+.big{font-size:72px;text-align:center;margin-top:10px}
+.center{text-align:center}
+.mu{color:var(--mu)}
+.err{display:inline-block;background:var(--bg);border-radius:10px;padding:4px 10px;margin:3px;font-weight:800}
+a.vid{display:flex;align-items:center;gap:12px;background:#ff3b3b;color:#fff;text-decoration:none;font-weight:800;border-radius:16px;padding:14px 16px;box-shadow:0 4px 0 #a31d1d;margin-bottom:14px}a.vid small{display:block;font-weight:600;opacity:.9}
+button:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+var K='mt_v1',S=null;
+try{S=JSON.parse(localStorage.getItem(K))}catch(e){}
+S=S||{stars:{},g:0,streak:0,last:''};
+function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
+var $=document.getElementById('app');
+var TRICK={1:'Любое число × 1 остаётся самим собой. Это самая лёгкая таблица!',2:'×2 — это удвоить число: 2×7 = 7+7 = 14.',3:'×3 — это ×2 и ещё одно число: 3×6 = 12 + 6 = 18.',4:'×4 — удвой два раза: 4×7 → 14 → 28.',5:'Ответ ×5 всегда кончается на 0 или 5. Это половина от ×10: 5×8 = 80÷2 = 40.',6:'6×n = 5×n + n. Например, 6×7 = 35 + 7 = 42.',7:'Трудные только 7×6=42, 7×7=49, 7×8=56. Остальные ты уже знаешь!',8:'×8 — удвой три раза: 8×6 → 12 → 24 → 48.',9:'У ответа сумма цифр всегда 9: 9×7=63 (6+3). Или так: 10×n − n.',10:'Просто припиши ноль: 10×7 = 70.'};
+var VID={1:'GTPdfLKrZtQ',2:'ox_kVZXmOes',3:'a4Oh_aXqrdU',4:'qbQz3WXtPP8',5:'xJj_BmUQW4I',6:'Up0PO8fxS-E',7:'VIEwoUz0Cjg',8:'BHu73WfpjkU',9:'G5u3tz1bAWs'};
+function watch(id){document.getElementById('vf').innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'" allow="fullscreen" allowfullscreen style="width:100%;aspect-ratio:16/9;border:0;border-radius:16px;margin-bottom:14px;background:#000"></iframe><p class="mu center" style="margin:-6px 0 14px;font-size:14px">Не грузится? Нажми красную кнопку — откроется YouTube.</p>'}
+function hue(n){return 'hsl('+(n*34+230)%360+' 70% 52%)'}
+function stars(n){return '★'.repeat(n)+'☆'.repeat(3-n)}
+function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function unlocked(n){return S.dbg||n==1||(S.stars[n-1]||0)>=1}
+function allDone(){if(S.dbg)return true;for(var i=1;i<=10;i++)if(!(S.stars[i]>=1))return false;return true}
+function total(){var t=S.g||0;for(var i=1;i<=10;i++)t+=S.stars[i]||0;return t}
+
+function home(){if(Q)Q.done=true;
+ var t=total(),h='<div class="hero"><h1>Таблица умножения</h1><p>Проходи тропинку шаг за шагом. Набирай звёзды!</p>'+
+ '<div class="bar"><i style="width:'+Math.round(t/33*100)+'%"></i></div>'+
+ '<div class="chips"><span class="chip">★ '+t+' / 33</span><span class="chip">🔥 '+(S.streak||0)+' дн.</span></div></div><div class="trail">';
+ for(var n=1;n<=10;n++){
+  var u=unlocked(n),s=S.stars[n]||0;
+  h+='<button class="node'+(u?'':' lock')+'" style="--c:'+hue(n)+'" '+(u?'onclick="learn('+n+')"':'disabled')+'><span class="n">'+(u?'×'+n:'🔒')+'</span><span><b>Умножение на '+n+'</b><small class="st">'+(u?stars(s):'сначала пройди ×'+(n-1))+'</small></span></button>';
+ }
+ var ad=allDone();
+ h+='<button class="node trophy'+(ad?'':' lock')+'" '+(ad?'onclick="startG()"':'disabled')+'><span class="n">🏆</span><span><b>Глобальный тест</b><small class="st">'+(ad?stars(S.g||0)+(S.gt?' ⏱ '+fmt(S.gt):''):'пройди все уровни')+'</small></span></button><button class="node trophy" style="background:var(--pr);color:#fff" onclick="startI()"><span class="n" style="background:#fff;color:var(--pr)">∞</span><span><b>Бесконечный режим</b><small style="color:#e0e1ff">рекорд подряд: '+(S.best||0)+'</small></span></button><button class="node trophy" style="background:#ff7a1a;color:#fff" onclick="startB()"><span class="n" style="background:#fff;color:#ff7a1a">⚡</span><span><b>Блиц 60 секунд</b><small style="color:#fff">рекорд: '+(S.bb||0)+'</small></span></button></div><button class="btn ghost" onclick="settings()">⚙ Настройки</button>';
+ $.innerHTML=h;window.scrollTo(0,0);
+}
+
+var L={n:1,k:1,hide:false};
+function learn(n){L={n:n,k:L.n==n?L.k:1,hide:false};drawLearn()}
+function drawLearn(){
+ var n=L.n,c=hue(n),h='<div class="top"><button class="back" onclick="home()">←</button><h2>Таблица на '+n+'</h2></div>';
+ h+='<div class="trick">💡 '+TRICK[n]+'</div><div class="card"><div class="rows">';
+ for(var k=1;k<=10;k++)h+='<button class="row'+(L.k==k?' on':'')+(L.hide&&L.k!=k?' hid':'')+'" onclick="L.k='+k+';drawLearn()"><span>'+n+' × '+k+'</span><span>= '+n*k+'</span></button>';
+ h+='</div></div><div class="card center" style="--c:'+c+'"><b>'+n+' × '+L.k+' = '+n*L.k+'</b><div class="mu">'+L.k+' ряд(а) по '+n+'</div><div class="dots" style="max-width:'+(n*25)+'px">';
+ for(var i=0;i<n*L.k;i++)h+='<i></i>';
+ h+='</div></div><button class="btn ghost" onclick="L.hide=!L.hide;drawLearn()">'+(L.hide?'Показать ответы':'Спрятать ответы и вспомнить')+'</button>'+
+ (VID[n]?'<a class="vid" target="_blank" rel="noopener" href="https://youtu.be/'+VID[n]+'"><span style="font-size:30px">▶</span><span>Видео: учим ×'+n+' с учителем<small>откроется YouTube</small></span></a><button class="btn ghost" style="margin:-4px 0 14px" onclick="watch(\''+VID[n]+'\')">▶ Смотреть прямо тут</button><div id="vf"></div>':'')+'<button class="btn" onclick="startQ('+n+',\'p\')">Тренировка</button>'+
+ '<button class="btn sun" onclick="startQ('+n+',\'t\')">Сразу к проверке</button>';
+ $.innerHTML=h;
+}
+
+var Q=null;
+function startQ(n,m){
+ var l=[];for(var k=1;k<=10;k++)l.push(Math.random()<.5?[n,k]:[k,n]);
+ Q={m:m,n:n,l:shuf(l),i:0,ok:0,inp:'',lock:false,errs:[],g:false};draw();
+}
+function fmt(ms){var s=Math.floor(ms/1000);return Math.floor(s/60)+':'+('0'+s%60).slice(-2)}
+function el(){return Q.bl?Math.max(0,Q.end-Date.now()+999):Date.now()-Q.t0}
+function tick(){var e=document.getElementById('tm');if(!Q||Q.done||!e)return;if(Q.bl&&Date.now()>=Q.end)return result();e.textContent=fmt(el())}
+setInterval(tick,250);
+function startB(){Q={m:'t',inf:true,bl:true,n:0,l:[],i:0,ok:0,st:0,inp:'',lock:false,errs:[],g:true,end:Date.now()+60000};draw()}
+function blitzRes(){Q.done=true;var nb=Q.ok>(S.bb||0);if(nb)S.bb=Q.ok;save();
+ var h='<div class="big">⚡</div><h1 class="center">'+Q.ok+' верных за минуту</h1><p class="center mu">'+(nb?'🏅 Новый рекорд!':'Рекорд: '+(S.bb||0))+'</p>';
+ if(Q.errs.length){h+='<div class="card center"><div class="mu">Повтори:</div>';Q.errs.slice(-6).forEach(function(p){h+='<span class="err">'+p[0]+'×'+p[1]+'='+p[0]*p[1]+'</span>'});h+='</div>'}
+ $.innerHTML=h+'<button class="btn sun" onclick="startB()">Ещё раз</button><button class="btn ghost" onclick="home()">К тропинке</button>';window.scrollTo(0,0)}
+function settings(){$.innerHTML='<div class="top"><button class="back" onclick="home()">←</button><h2>Настройки</h2></div><div class="card"><b>Режим отладки</b><p class="mu">Открывает все уровни и глобальный тест сразу.</p><button class="btn '+(S.dbg?'sun':'ghost')+'" onclick="S.dbg=!S.dbg;save();settings()">'+(S.dbg?'Включён — выключить':'Включить')+'</button></div><div class="card"><b>Сбросить прогресс</b><p class="mu">Звёзды, рекорды и серия удалятся.</p><button class="btn ghost" onclick="if(confirm(\'Точно удалить весь прогресс?\')){S={stars:{},g:0,streak:0,last:\'\'};save();home()}">Сбросить</button></div>'}
+function startI(){Q={m:'t',inf:true,n:0,l:[],i:0,ok:0,st:0,inp:'',lock:false,errs:[],g:true};draw()}
+function startG(){
+ var l=[];for(var i=0;i<20;i++){var a=1+Math.floor(Math.random()*10),b=1+Math.floor(Math.random()*10);l.push([a,b])}
+ Q={m:'t',n:0,l:l,i:0,ok:0,inp:'',lock:false,errs:[],g:true,t0:Date.now()};draw();
+}
+function draw(){
+ if(Q.inf&&Q.i>=Q.l.length)Q.l.push([1+Math.floor(Math.random()*10),1+Math.floor(Math.random()*10)]);
+ if(Q.i>=Q.l.length)return result();
+ var p=Q.l[Q.i],a=p[0],b=p[1],r=a*b;
+ var h=Q.inf?'<div class="top"><button class="back" onclick="home()">←</button><b>✓ '+Q.ok+'</b><b>🔥 '+Q.st+'</b>'+(Q.bl?'<b id="tm">'+fmt(el())+'</b>':'')+'<span class="mu" style="margin-left:auto">рекорд '+(Q.bl?(S.bb||0):(S.best||0))+'</span></div>':'<div class="top"><button class="back" onclick="'+(Q.g?'home()':'learn('+Q.n+')')+'">←</button><div class="bar"><i style="width:'+Math.round(Q.i/Q.l.length*100)+'%"></i></div><b>'+(Q.i+1)+'/'+Q.l.length+'</b>'+(Q.g?'<b id="tm">'+fmt(el())+'</b>':'')+'</div>';
+ if(Q.m=='p'){
+  var o={};o[r]=1;[a*(b+1),a*(b-1),(a+1)*b,(a-1)*b,r+10,r-10,r+2,r-2].forEach(function(x){if(x>0&&Object.keys(o).length<4)o[x]=1});
+  h+='<div class="q">'+a+' × '+b+'</div><div class="opts">'+shuf(Object.keys(o)).map(function(x){return '<button class="opt" data-v="'+x+'" onclick="pick(this)">'+x+'</button>'}).join('')+'</div>';
+ }else{
+  h+='<div class="q" style="margin:8px 0">'+a+' × '+b+'</div><div class="disp" id="d">'+(Q.inp||'?')+'</div><div class="pad">';
+  [1,2,3,4,5,6,7,8,9,'⌫',0,'✓'].forEach(function(k){h+='<button'+(k=='✓'?' class="go"':'')+' onclick="key(\''+k+'\')">'+k+'</button>'});
+  h+='</div>';
+ }
+ $.innerHTML=h;
+}
+function next(ms){Q.lock=true;setTimeout(function(){if(Q.done)return;Q.i++;Q.inp='';Q.lock=false;draw()},ms)}
+function pick(el){
+ if(Q.lock)return;var p=Q.l[Q.i],r=p[0]*p[1],v=+el.dataset.v;
+ if(v==r){Q.ok++;el.className='opt ok';next(600)}
+ else{el.className='opt bad';Q.errs.push(p);document.querySelectorAll('.opt').forEach(function(b){if(+b.dataset.v==r)b.className='opt ok'});next(1300)}
+}
+function key(k){
+ if(Q.lock)return;var d=document.getElementById('d');
+ if(k=='⌫')Q.inp=Q.inp.slice(0,-1);
+ else if(k=='✓'){
+  if(!Q.inp)return;var p=Q.l[Q.i],r=p[0]*p[1];
+  if(+Q.inp==r){Q.ok++;Q.st=(Q.st||0)+1;if(Q.inf&&Q.st>(S.best||0)){S.best=Q.st;save()}d.className='disp ok';next(600)}
+  else{Q.errs.push(p);Q.st=0;d.className='disp bad';d.textContent=Q.inp+' → '+r;next(Q.bl?700:1500)}
+  return;
+ }else if(Q.inp.length<3)Q.inp+=k;
+ d.textContent=Q.inp||'?';
+}
+function result(){
+ var sc=Q.ok,len=Q.l.length,pass,s=0,msg='',rec='';if(Q.bl)return blitzRes();Q.done=true;
+ var today=new Date().toDateString(),y=new Date(Date.now()-864e5).toDateString();
+ if(S.last!=today){S.streak=S.last==y?(S.streak||0)+1:1;S.last=today}
+ if(Q.m=='t'){
+  if(Q.g){s=sc>=20?3:sc>=18?2:sc>=16?1:0;if(s>(S.g||0))S.g=s;var tt=Date.now()-Q.t0;S.hist=(S.hist||[]).concat([{sc:sc,t:tt}]).slice(-5);var nb=sc>=16&&(!S.gt||tt<S.gt);if(nb)S.gt=tt;
+   rec='<div class="card center"><b style="font-size:24px">⏱ '+fmt(tt)+'</b>'+(nb?' 🏅 новый рекорд!':'')+'<div class="mu">лучшее время: '+(S.gt?fmt(S.gt):'—')+'</div><div class="mu" style="font-size:15px;margin-top:6px">'+S.hist.slice().reverse().map(function(x){return x.sc+'/20 за '+fmt(x.t)}).join('<br>')+'</div></div>'}
+  else{s=sc>=10?3:sc==9?2:sc==8?1:0;if(s>(S.stars[Q.n]||0))S.stars[Q.n]=s}
+  pass=s>0;
+ }else pass=sc>=len-1;
+ save();
+ var emoji=Q.m=='p'?(pass?'👍':'💪'):(s==3?'🏆':s>0?'🎉':'💪');
+ var h='<div class="big">'+emoji+'</div><h1 class="center">'+sc+' из '+len+'</h1>';
+ if(Q.m=='t')h+='<div class="center st" style="font-size:40px;color:var(--sun);margin:8px 0">'+stars(s)+'</div>';
+ h+='<p class="center mu">'+(Q.m=='p'?(pass?'Отлично! Теперь проверка.':'Ещё круг, и всё получится.'):s>0?(s==3?'Без ошибок!':'Ты прошёл уровень! Следующий открыт.'):Q.g?'Нужно минимум 16 из 20. Повтори слабые места.':'Нужно минимум 8 из 10. Повтори таблицу и попробуй снова.')+'</p>';
+ h+=rec;if(Q.errs.length){h+='<div class="card center"><div class="mu">Повтори:</div>';Q.errs.forEach(function(p){h+='<span class="err">'+p[0]+'×'+p[1]+'='+p[0]*p[1]+'</span>'});h+='</div>'}
+ var n=Q.n,g=Q.g,m=Q.m;
+ if(m=='p')h+='<button class="btn sun" onclick="startQ('+n+',\'t\')">Начать проверку</button><button class="btn ghost" onclick="startQ('+n+',\'p\')">Ещё тренировка</button>';
+ else if(g)h+='<button class="btn sun" onclick="startG()">Пройти ещё раз</button>';
+ else{h+='<button class="btn ghost" onclick="startQ('+n+',\'t\')">Пройти ещё раз</button>';if(s>0&&n<10)h+='<button class="btn sun" onclick="learn('+(n+1)+')">Дальше: ×'+(n+1)+'</button>'}
+ h+='<button class="btn ghost" onclick="home()">К тропинке</button>';
+ $.innerHTML=h;window.scrollTo(0,0);
+}
+home();
+</script>
+</body>
+</html>
